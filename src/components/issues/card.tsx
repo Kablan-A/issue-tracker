@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Issue } from '@/lib/types';
-import { Badge } from '@/components/ui/badge';
-import { ISSUES_PRIORITY } from '@/lib/constants';
+import type { Issue, IssuesPriority } from '@/lib/types';
+import { Badge, badgeVariants } from '@/components/ui/badge';
+import type { VariantProps } from 'class-variance-authority';
+import { ISSUES_PRIORITY_LABEL } from '@/lib/constants';
 
 export type IssuesCardProps = Issue;
 
 export function IssuesCard({ title, priority, description, assignee }: IssuesCardProps) {
-  const { variant: priorityVariant, label: priorityLabel } = ISSUES_PRIORITY[priority];
   const assigneeInitial = assignee ? assignee[0].toUpperCase() : 'N/A';
 
   return (
@@ -16,7 +16,7 @@ export function IssuesCard({ title, priority, description, assignee }: IssuesCar
           <Badge variant="outline">{assigneeInitial}</Badge>
           <CardTitle>{title}</CardTitle>
         </div>
-        <Badge variant={priorityVariant}>{priorityLabel}</Badge>
+        <Badge variant={ISSUES_PRIORITY_VARIANT[priority]}>{ISSUES_PRIORITY_LABEL[priority]}</Badge>
       </CardHeader>
       <CardContent>
         <p>{description}</p>
@@ -24,3 +24,12 @@ export function IssuesCard({ title, priority, description, assignee }: IssuesCar
     </Card>
   );
 }
+
+export const ISSUES_PRIORITY_VARIANT: Record<
+  IssuesPriority,
+  VariantProps<typeof badgeVariants>['variant']
+> = {
+  low: 'outline',
+  medium: 'default',
+  high: 'destructive',
+};

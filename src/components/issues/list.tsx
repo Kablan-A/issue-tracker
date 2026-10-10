@@ -1,22 +1,23 @@
 import { IssuesCard, type IssuesCardProps } from '@/components/issues/card';
-import type { IssuesStatus } from '@/lib/types';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { ISSUES_STATUS } from '@/lib/constants';
+import { type Issue, type IssuesStatus } from '@/lib/types';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { IssuesAddDialog } from '@/components/issues/add-dialog';
 
 export type IssuesListProps = {
   status: IssuesStatus;
   list: Array<IssuesCardProps>;
+  onAddIssue: (issue: Issue) => void;
 };
 
-export function IssuesList({ status, list }: IssuesListProps) {
+export function IssuesList({ status, list, onAddIssue }: IssuesListProps) {
   const issuesCount = list.length;
 
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between gap-5">
-          <CardTitle>{ISSUES_STATUS[status]}</CardTitle>
+          <CardTitle>{ISSUES_STATUS_LABEL[status]}</CardTitle>
           <Badge variant="ghost">{issuesCount}</Badge>
         </div>
       </CardHeader>
@@ -25,6 +26,15 @@ export function IssuesList({ status, list }: IssuesListProps) {
           <IssuesCard key={issue.id} {...issue} />
         ))}
       </CardContent>
+      <CardFooter>
+        <IssuesAddDialog status={status} onAddIssue={onAddIssue} />
+      </CardFooter>
     </Card>
   );
 }
+
+const ISSUES_STATUS_LABEL: Record<IssuesStatus, string> = {
+  open: 'Open',
+  'in-progress': 'In Progress',
+  closed: 'Closed',
+};

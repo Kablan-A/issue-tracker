@@ -3,26 +3,7 @@ import type { Issue } from '@/lib/types';
 import { IssuesList } from '@/components/issues/list';
 
 export function App() {
-  const [openIssues, setOpenIssues] = React.useState<Issue[]>([
-    {
-      id: '1',
-      title: 'Issue 1',
-      status: 'open',
-      priority: 'medium',
-      createdAt: '',
-      description: 'This is the first issue',
-      assignee: 'John Doe',
-    },
-    {
-      id: '2',
-      title: 'Issue 1',
-      status: 'open',
-      priority: 'medium',
-      createdAt: '',
-      description: 'This is the first issue',
-      assignee: 'John Doe',
-    },
-  ]);
+  const [openIssues, setOpenIssues] = React.useState<Issue[]>([]);
   const [inProgressIssues, setInProgressIssues] = React.useState<Issue[]>([]);
   const [closedIssues, setClosedIssues] = React.useState<Issue[]>([]);
 

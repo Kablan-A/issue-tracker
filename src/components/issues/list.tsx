@@ -14,14 +14,14 @@ export function IssuesList({ status, list, onAddIssue }: IssuesListProps) {
   const issuesCount = list.length;
 
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader>
         <div className="flex items-center justify-between gap-5">
           <CardTitle>{ISSUES_STATUS_LABEL[status]}</CardTitle>
           <Badge variant="ghost">{issuesCount}</Badge>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         {list.map((issue) => (
           <IssuesCard key={issue.id} {...issue} />
         ))}

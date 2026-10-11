@@ -1,12 +1,14 @@
-import { IssuesCard, type IssuesCardProps } from '@/components/issues/card';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { IssuesListCard, type IssuesListCardProps } from '@/components/issues/list/card';
 import { type Issue, type IssuesStatus } from '@/lib/types';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { IssuesAddDialog } from '@/components/issues/add-dialog';
+import { IssuesDialog } from '@/components/issues/dialog';
 
 export type IssuesListProps = {
   status: IssuesStatus;
-  list: Array<IssuesCardProps>;
+  list: Array<IssuesListCardProps>;
   onAddIssue: (issue: Issue) => void;
 };
 
@@ -23,7 +25,14 @@ export function IssuesList({ status, list, onAddIssue }: IssuesListProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {list.map((issue) => (
-          <IssuesCard key={issue.id} {...issue} />
+          <Dialog key={issue.id}>
+            <DialogTrigger className="w-full rounded-xl">
+              <IssuesListCard {...issue} />
+            </DialogTrigger>
+            <DialogContent>
+              <IssuesDialog {...issue} />
+            </DialogContent>
+          </Dialog>
         ))}
       </CardContent>
       <CardFooter>

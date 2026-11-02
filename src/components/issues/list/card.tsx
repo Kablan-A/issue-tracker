@@ -7,6 +7,7 @@ export type IssuesListCardProps = Pick<Issue, 'title' | 'priority' | 'assignee'>
 
 export function IssuesListCard({ title, priority, assignee, ...props }: IssuesListCardProps) {
   const assigneeInitial = assignee ? assignee[0].toUpperCase() : 'N/A';
+  const validPriority = priority in ISSUES_PRIORITY_LABEL;
 
   return (
     <Card
@@ -18,7 +19,9 @@ export function IssuesListCard({ title, priority, assignee, ...props }: IssuesLi
           <Badge variant="outline">{assigneeInitial}</Badge>
           <CardTitle>{title}</CardTitle>
         </div>
-        <Badge variant={ISSUES_PRIORITY_VARIANT[priority]}>{ISSUES_PRIORITY_LABEL[priority]}</Badge>
+        <Badge variant={validPriority ? ISSUES_PRIORITY_VARIANT[priority] : 'default'}>
+          {validPriority ? ISSUES_PRIORITY_LABEL[priority] : 'N/A'}
+        </Badge>
       </CardHeader>
     </Card>
   );

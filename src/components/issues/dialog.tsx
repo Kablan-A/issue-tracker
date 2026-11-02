@@ -26,6 +26,8 @@ export function IssuesDialog({
     onChangeIssue(id, { status: newStatus });
   };
 
+  const validPriority = priority in ISSUES_PRIORITY_LABEL;
+
   const assigneeInitial = assignee ? assignee[0].toUpperCase() : 'N/A';
   const formattedDate = new Date(createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -40,7 +42,9 @@ export function IssuesDialog({
         <h1 className="text-2xl">{title || 'Somehow no title'}</h1>
       </div>
       <div className="mb-5 flex items-center gap-4">
-        <Badge variant={ISSUES_PRIORITY_VARIANT[priority]}>{ISSUES_PRIORITY_LABEL[priority]}</Badge>
+        <Badge variant={validPriority ? ISSUES_PRIORITY_VARIANT[priority] : 'default'}>
+          {validPriority ? ISSUES_PRIORITY_LABEL[priority] : 'N/A'}
+        </Badge>
         <p>{formattedDate}</p>
         <label>
           Status:

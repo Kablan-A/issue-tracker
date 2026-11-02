@@ -5,11 +5,14 @@ import { ISSUES_PRIORITY_LABEL, ISSUES_PRIORITY_VARIANT } from '@/lib/constants'
 
 export type IssuesListCardProps = Issue;
 
-export function IssuesListCard({ title, priority, assignee }: IssuesListCardProps) {
+export function IssuesListCard({ title, priority, assignee, ...props }: IssuesListCardProps) {
   const assigneeInitial = assignee ? assignee[0].toUpperCase() : 'N/A';
 
   return (
-    <Card>
+    <Card
+      {...props}
+      className="cursor-pointer transition-all hover:bg-muted dark:hover:bg-muted/50"
+    >
       <CardHeader className="gap-2">
         <div className="flex items-center gap-4">
           <Badge variant="outline">{assigneeInitial}</Badge>

@@ -1,20 +1,19 @@
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { IssuesListCard, type IssuesListCardProps } from '@/components/issues/list/card';
 import { type Issue, type IssuesStatus } from '@/lib/types';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { IssuesAddDialog } from '@/components/issues/add-dialog';
-import { IssuesDialog } from '@/components/issues/dialog';
 import { ISSUES_STATUS_LABEL } from '@/lib/constants';
+import { Button } from '@/components/ui/button';
 
 export type IssuesListProps = {
   status: IssuesStatus;
   list: Array<IssuesListCardProps>;
   onAddIssue: (issue: Issue) => void;
-  onChangeIssue: (id: Issue['id'], issue: Partial<Issue>) => void;
+  onSelectIssue: (issue: Issue) => void;
 };
 
-export function IssuesList({ status, list, onAddIssue, onChangeIssue }: IssuesListProps) {
+export function IssuesList({ status, list, onAddIssue, onSelectIssue }: IssuesListProps) {
   const issuesCount = list.length;
 
   return (
@@ -27,14 +26,12 @@ export function IssuesList({ status, list, onAddIssue, onChangeIssue }: IssuesLi
       </CardHeader>
       <CardContent className="space-y-4">
         {list.map((issue) => (
-          <Dialog key={issue.id}>
-            <DialogTrigger className="w-full rounded-xl">
-              <IssuesListCard {...issue} />
-            </DialogTrigger>
-            <DialogContent>
-              <IssuesDialog {...issue} onChangeIssue={onChangeIssue} />
-            </DialogContent>
-          </Dialog>
+          <Button
+            key={issue.id}
+            render={(props) => <IssuesListCard {...issue} {...props} />}
+            nativeButton={false}
+            onClick={() => onSelectIssue(issue)}
+          />
         ))}
       </CardContent>
       <CardFooter>

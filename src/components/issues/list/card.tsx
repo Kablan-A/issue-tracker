@@ -3,7 +3,7 @@ import type { Issue } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { ISSUES_PRIORITY_LABEL, ISSUES_PRIORITY_VARIANT } from '@/lib/constants';
 
-export type IssuesListCardProps = Issue;
+export type IssuesListCardProps = Pick<Issue, 'title' | 'priority' | 'assignee'>;
 
 export function IssuesListCard({ title, priority, assignee, ...props }: IssuesListCardProps) {
   const assigneeInitial = assignee ? assignee[0].toUpperCase() : 'N/A';

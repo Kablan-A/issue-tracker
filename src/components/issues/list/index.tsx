@@ -1,4 +1,4 @@
-import { IssuesListCard, type IssuesListCardProps } from '@/components/issues/list/card';
+import { IssuesListCard } from '@/components/issues/list/card';
 import { type Issue, type IssuesStatus } from '@/lib/types';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 
 export type IssuesListProps = {
   status: IssuesStatus;
-  list: Array<IssuesListCardProps>;
+  list: Array<Issue>;
   onAddIssue: (issue: Issue) => void;
   onSelectIssue: (id: Issue['id']) => void;
 };

@@ -37,7 +37,7 @@ export function IssuesDialog({
     <div>
       <div className="mb-3 flex items-center gap-4">
         <Badge variant="outline">{assigneeInitial}</Badge>
-        <h1 className="text-2xl">{title}</h1>
+        <h1 className="text-2xl">{title || 'Somehow no title'}</h1>
       </div>
       <div className="mb-5 flex items-center gap-4">
         <Badge variant={ISSUES_PRIORITY_VARIANT[priority]}>{ISSUES_PRIORITY_LABEL[priority]}</Badge>

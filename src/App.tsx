@@ -4,8 +4,17 @@ import { IssuesList } from '@/components/issues/list';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { IssuesDialog } from '@/components/issues/dialog';
 
+const LOCAL_ISSUES_KEY = 'issues';
+
 export function App() {
-  const [issues, setIssues] = React.useState<Issue[]>([]);
+  const [issues, setIssues] = React.useState<Issue[]>(() => {
+    const saved = localStorage.getItem(LOCAL_ISSUES_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem(LOCAL_ISSUES_KEY, JSON.stringify(issues));
+  }, [issues]);
 
   const openIssues = issues.filter((issue) => issue.status === 'open');
   const inProgressIssues = issues.filter((issue) => issue.status === 'in-progress');

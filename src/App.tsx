@@ -3,24 +3,23 @@ import type { Issue } from '@/lib/types';
 import { IssuesList } from '@/components/issues/list';
 
 export function App() {
-  const [openIssues, setOpenIssues] = React.useState<Issue[]>([]);
-  const [inProgressIssues, setInProgressIssues] = React.useState<Issue[]>([]);
-  const [closedIssues, setClosedIssues] = React.useState<Issue[]>([]);
+  const [issues, setIssues] = React.useState<Issue[]>([]);
+
+  const openIssues = React.useMemo(
+    () => issues.filter((issue) => issue.status === 'open'),
+    [issues]
+  );
+  const inProgressIssues = React.useMemo(
+    () => issues.filter((issue) => issue.status === 'in-progress'),
+    [issues]
+  );
+  const closedIssues = React.useMemo(
+    () => issues.filter((issue) => issue.status === 'closed'),
+    [issues]
+  );
 
   const handleAddIssue = (issue: Issue) => {
-    switch (issue.status) {
-      case 'open':
-        setOpenIssues((prevIssues) => [...prevIssues, issue]);
-        break;
-      case 'in-progress':
-        setInProgressIssues((prevIssues) => [...prevIssues, issue]);
-        break;
-      case 'closed':
-        setClosedIssues((prevIssues) => [...prevIssues, issue]);
-        break;
-      default:
-        break;
-    }
+    setIssues((prev) => [...prev, issue]);
   };
 
   return (

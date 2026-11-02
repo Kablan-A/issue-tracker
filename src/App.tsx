@@ -13,13 +13,32 @@ export function App() {
     setIssues((prev) => [...prev, issue]);
   };
 
+  const handleChangeIssue = (id: Issue['id'], issue: Partial<Issue>) => {
+    setIssues((prev) => prev.map((i) => (i.id === id ? { ...i, ...issue } : i)));
+  };
+
   return (
     <div className="min-h-svh p-5">
       <div className="mx-auto max-w-5xl">
         <div className="grid grid-cols-3 gap-5">
-          <IssuesList status="open" list={openIssues} onAddIssue={handleAddIssue} />
-          <IssuesList status="in-progress" list={inProgressIssues} onAddIssue={handleAddIssue} />
-          <IssuesList status="closed" list={closedIssues} onAddIssue={handleAddIssue} />
+          <IssuesList
+            status="open"
+            list={openIssues}
+            onAddIssue={handleAddIssue}
+            onChangeIssue={handleChangeIssue}
+          />
+          <IssuesList
+            status="in-progress"
+            list={inProgressIssues}
+            onAddIssue={handleAddIssue}
+            onChangeIssue={handleChangeIssue}
+          />
+          <IssuesList
+            status="closed"
+            list={closedIssues}
+            onAddIssue={handleAddIssue}
+            onChangeIssue={handleChangeIssue}
+          />
         </div>
       </div>
     </div>

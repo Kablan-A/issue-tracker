@@ -5,14 +5,16 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Badge } from '@/components/ui/badge';
 import { IssuesAddDialog } from '@/components/issues/add-dialog';
 import { IssuesDialog } from '@/components/issues/dialog';
+import { ISSUES_STATUS_LABEL } from '@/lib/constants';
 
 export type IssuesListProps = {
   status: IssuesStatus;
   list: Array<IssuesListCardProps>;
   onAddIssue: (issue: Issue) => void;
+  onChangeIssue: (id: Issue['id'], issue: Partial<Issue>) => void;
 };
 
-export function IssuesList({ status, list, onAddIssue }: IssuesListProps) {
+export function IssuesList({ status, list, onAddIssue, onChangeIssue }: IssuesListProps) {
   const issuesCount = list.length;
 
   return (
@@ -30,7 +32,7 @@ export function IssuesList({ status, list, onAddIssue }: IssuesListProps) {
               <IssuesListCard {...issue} />
             </DialogTrigger>
             <DialogContent>
-              <IssuesDialog {...issue} />
+              <IssuesDialog {...issue} onChangeIssue={onChangeIssue} />
             </DialogContent>
           </Dialog>
         ))}
@@ -41,9 +43,3 @@ export function IssuesList({ status, list, onAddIssue }: IssuesListProps) {
     </Card>
   );
 }
-
-const ISSUES_STATUS_LABEL: Record<IssuesStatus, string> = {
-  open: 'Open',
-  'in-progress': 'In Progress',
-  closed: 'Closed',
-};

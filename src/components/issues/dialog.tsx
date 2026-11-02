@@ -21,11 +21,8 @@ export function IssuesDialog({
   createdAt,
   onChangeIssue,
 }: IssuesDialogProps) {
-  const [issueStatus, setIssueStatus] = React.useState<IssuesStatus>(status);
-
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement, HTMLSelectElement>) => {
     const newStatus = e.target.value as IssuesStatus;
-    setIssueStatus(newStatus);
     onChangeIssue(id, { status: newStatus });
   };
 
@@ -47,7 +44,7 @@ export function IssuesDialog({
         <p>{formattedDate}</p>
         <label>
           Status:
-          <select id="issueStatus" name="status" value={issueStatus} onChange={handleStatusChange}>
+          <select id="issueStatus" name="status" value={status} onChange={handleStatusChange}>
             {ISSUES_STATUS.map((status) => (
               <option key={status} value={status}>
                 {ISSUES_STATUS_LABEL[status]}

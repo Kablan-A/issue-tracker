@@ -10,7 +10,7 @@ export type IssuesListProps = {
   status: IssuesStatus;
   list: Array<IssuesListCardProps>;
   onAddIssue: (issue: Issue) => void;
-  onSelectIssue: (issue: Issue) => void;
+  onSelectIssue: (id: Issue['id']) => void;
 };
 
 export function IssuesList({ status, list, onAddIssue, onSelectIssue }: IssuesListProps) {
@@ -30,7 +30,7 @@ export function IssuesList({ status, list, onAddIssue, onSelectIssue }: IssuesLi
             key={issue.id}
             render={(props) => <IssuesListCard {...issue} {...props} />}
             nativeButton={false}
-            onClick={() => onSelectIssue(issue)}
+            onClick={() => onSelectIssue(issue.id)}
           />
         ))}
       </CardContent>

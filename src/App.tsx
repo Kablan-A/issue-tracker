@@ -19,7 +19,8 @@ export function App() {
     setIssues((prev) => prev.map((i) => (i.id === id ? { ...i, ...issue } : i)));
   };
 
-  const [selectedIssue, setSelectedIssue] = React.useState<Issue | null>(null);
+  const [selectedIssueId, setSelectedIssueId] = React.useState<Issue['id'] | null>(null);
+  const selectedIssue = issues.find((i) => i.id === selectedIssueId);
 
   return (
     <div className="min-h-svh p-5">
@@ -29,23 +30,23 @@ export function App() {
             status="open"
             list={openIssues}
             onAddIssue={handleAddIssue}
-            onSelectIssue={setSelectedIssue}
+            onSelectIssue={setSelectedIssueId}
           />
           <IssuesList
             status="in-progress"
             list={inProgressIssues}
             onAddIssue={handleAddIssue}
-            onSelectIssue={setSelectedIssue}
+            onSelectIssue={setSelectedIssueId}
           />
           <IssuesList
             status="closed"
             list={closedIssues}
             onAddIssue={handleAddIssue}
-            onSelectIssue={setSelectedIssue}
+            onSelectIssue={setSelectedIssueId}
           />
 
           {selectedIssue && (
-            <Dialog open={!!selectedIssue} onOpenChange={() => setSelectedIssue(null)}>
+            <Dialog open={!!selectedIssue} onOpenChange={() => setSelectedIssueId(null)}>
               <DialogContent>
                 <IssuesDialog {...selectedIssue} onChangeIssue={handleChangeIssue} />
               </DialogContent>

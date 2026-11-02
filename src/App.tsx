@@ -5,18 +5,9 @@ import { IssuesList } from '@/components/issues/list';
 export function App() {
   const [issues, setIssues] = React.useState<Issue[]>([]);
 
-  const openIssues = React.useMemo(
-    () => issues.filter((issue) => issue.status === 'open'),
-    [issues]
-  );
-  const inProgressIssues = React.useMemo(
-    () => issues.filter((issue) => issue.status === 'in-progress'),
-    [issues]
-  );
-  const closedIssues = React.useMemo(
-    () => issues.filter((issue) => issue.status === 'closed'),
-    [issues]
-  );
+  const openIssues = issues.filter((issue) => issue.status === 'open');
+  const inProgressIssues = issues.filter((issue) => issue.status === 'in-progress');
+  const closedIssues = issues.filter((issue) => issue.status === 'closed');
 
   const handleAddIssue = (issue: Issue) => {
     setIssues((prev) => [...prev, issue]);

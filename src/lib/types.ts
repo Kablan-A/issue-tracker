@@ -13,3 +13,16 @@ export type Issue = {
   description?: string;
   assignee?: string;
 };
+
+export type LoadedIssueErrors = Partial<Record<keyof Issue, string>>;
+
+export type LoadedIssue =
+  | {
+      type: 'valid';
+      issue: Issue;
+    }
+  | {
+      type: 'invalid';
+      issue: unknown;
+      errors: LoadedIssueErrors;
+    };

@@ -3,9 +3,32 @@ import type { Issue } from '@/lib/types';
 import { IssuesList } from '@/components/issues/list';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { IssuesDialog } from '@/components/issues/dialog';
+import { loadLocalIssues, resetLocalIssues } from '@/local-storage/issues';
+import { toast } from '@/components/ui/toast';
 
 export function App() {
-  const [issues, setIssues] = React.useState<Issue[]>([]);
+  const [issues, setIssues] = React.useState<Issue[]>(() => {
+    const { loadedIssues } = loadLocalIssues();
+
+    return loadedIssues.filter((i) => i.type === 'valid').map((i) => i.issue);
+  });
+
+  React.useEffect(() => {
+    const { errorMessage } = loadLocalIssues();
+
+    // push toast to the end of event loop until garanteed that Toast is mounted
+    const toastDelay = 0;
+    if (errorMessage) {
+      setTimeout(() => {
+        toast.add({ type: 'error', title: errorMessage });
+      }, toastDelay);
+      resetLocalIssues();
+    }
+  }, []);
+
+  // React.useEffect(() => {
+  //   localStorage.setItem(LOCAL_ISSUES_KEY, JSON.stringify(issues));
+  // }, [issues]);
 
   const openIssues = issues.filter((issue) => issue.status === 'open');
   const inProgressIssues = issues.filter((issue) => issue.status === 'in-progress');
